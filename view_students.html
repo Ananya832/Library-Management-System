@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Registered Students</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        a.home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background-color: #1976d2;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+        
+        a.home-link:hover {
+            background-color: #1565c0;
+        }
+        
+        h1 {
+            color: #0d47a1;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 90%;
+            max-width: 1100px;
+            border-collapse: collapse;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: white;
+        }
+        
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        th {
+            background-color: #1976d2;
+            color: white;
+            font-size: 16px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f1f1f1;
+        }
+        
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .btn {
+            padding: 6px 12px;
+            margin: 0 4px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .edit-btn {
+            background-color: #4caf50;
+            color: white;
+        }
+        
+        .edit-btn:hover {
+            background-color: #388e3c;
+        }
+        
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+        
+        .save-btn {
+            background-color: #2196f3;
+            color: white;
+        }
+        
+        .save-btn:hover {
+            background-color: #1976d2;
+        }
+        
+        td[contenteditable="true"] {
+            background-color: #fff9c4;
+            border: 2px solid #ffeb3b;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="home-link" href="index.html">🏠 Home</a>
+    <h1>Registered Students</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>USN</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Semester</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Gender</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="students-list"></tbody>
+    </table>
+
+    <script>
+        const studentsData = [{
+            usn: "1CS21CS001",
+            name: "John Doe",
+            department: "CSE",
+            semester: "5",
+            email: "john@example.com",
+            phone: "9876543210",
+            gender: "Male"
+        }, {
+            usn: "2IT21IT015",
+            name: "Jane Smith",
+            department: "IT",
+            semester: "4",
+            email: "jane@example.com",
+            phone: "8765432109",
+            gender: "Female"
+        }, {
+            usn: "3ECE21ECE007",
+            name: "Emily Johnson",
+            department: "ECE",
+            semester: "6",
+            email: "emily@example.com",
+            phone: "7654321098",
+            gender: "Female"
+        }, {
+            usn: "4CSE21CS009",
+            name: "Michael Brown",
+            department: "CSE",
+            semester: "3",
+            email: "michael@example.com",
+            phone: "6543210987",
+            gender: "Male"
+        }];
+
+        if (!localStorage.getItem("members")) {
+            localStorage.setItem("members", JSON.stringify(studentsData));
+        }
+
+        function renderStudents(students) {
+            const studentsList = document.getElementById("students-list");
+            studentsList.innerHTML = "";
+
+            if (students.length === 0) {
+                studentsList.innerHTML = "<tr><td colspan='8'>No students registered yet.</td></tr>";
+                return;
+            }
+
+            students.forEach((student, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+          <td contenteditable="false">${student.usn}</td>
+          <td contenteditable="false">${student.name}</td>
+          <td contenteditable="false">${student.department}</td>
+          <td contenteditable="false">${student.semester}</td>
+          <td contenteditable="false">${student.email}</td>
+          <td contenteditable="false">${student.phone}</td>
+          <td contenteditable="false">${student.gender}</td>
+          <td>
+            <button class="btn edit-btn" onclick="editStudent(${index}, this)">Edit</button>
+            <button class="btn delete-btn" onclick="deleteStudent(${index})">Delete</button>
+          </td>
+        `;
+                studentsList.appendChild(row);
+            });
+        }
+
+        function editStudent(index, button) {
+            const row = button.closest("tr");
+            const tds = row.querySelectorAll("td");
+
+            if (button.textContent === "Edit") {
+                tds.forEach((td, i) => {
+                    if (i < 7) td.contentEditable = true;
+                });
+                button.textContent = "Save";
+                button.classList.remove("edit-btn");
+                button.classList.add("save-btn");
+            } else {
+                const updatedStudent = {
+                    usn: tds[0].textContent.trim(),
+                    name: tds[1].textContent.trim(),
+                    department: tds[2].textContent.trim(),
+                    semester: tds[3].textContent.trim(),
+                    email: tds[4].textContent.trim(),
+                    phone: tds[5].textContent.trim(),
+                    gender: tds[6].textContent.trim()
+                };
+
+                if (!updatedStudent.usn || !updatedStudent.name || !updatedStudent.department || !updatedStudent.semester || !updatedStudent.email || !updatedStudent.phone || !updatedStudent.gender) {
+                    alert("Please fill in all fields before saving.");
+                    return;
+                }
+
+                let students = JSON.parse(localStorage.getItem("members") || "[]");
+                students[index] = updatedStudent;
+                localStorage.setItem("members", JSON.stringify(students));
+                renderStudents(students);
+                alert("Student details updated!");
+            }
+        }
+
+        function deleteStudent(index) {
+            if (confirm("Are you sure you want to delete this student?")) {
+                let students = JSON.parse(localStorage.getItem("members") || "[]");
+                students.splice(index, 1);
+                localStorage.setItem("members", JSON.stringify(students));
+                renderStudents(students);
+            }
+        }
+
+        window.onload = () => {
+            const students = JSON.parse(localStorage.getItem("members") || "[]");
+            const sortedStudents = students.sort((a, b) => a.usn.localeCompare(b.usn));
+            renderStudents(sortedStudents);
+        };
+    </script>
+</body>
+
+</html>

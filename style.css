@@ -1,0 +1,61 @@
+/* General body styling */
+body {
+  font-family: Arial, sans-serif;
+  background-image: url('2191f580-2937-43ce-9e79-0d313e9fe269.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #333;
+  padding: 20px;
+}
+
+/* Main heading */
+h1 {
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  margin-top: 20px;
+}
+
+/* Styled home link as a button */
+.home-link {
+  display: inline-block;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  box-shadow: 1px 1px 5px #000;
+  margin-bottom: 20px;
+}
+
+/* Hover effect for home link */
+.home-link:hover {
+  background-color: #45a049;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Header and data cell styles */
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Table header background */
+th {
+  background-color: #f2f2f2;
+}
+
+/* Zebra striping for table rows */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}

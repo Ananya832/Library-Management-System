@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Available Books</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
+            background: linear-gradient(to right, #e3f2fd, #bbdefb);
+            color: #333;
+            position: relative;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1565c0;
+            text-shadow: 1px 1px 2px #90caf9;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #e3f2fd;
+            border: 3px solid #90caf9;
+            border-radius: 10px;
+        }
+        
+        th,
+        td {
+            border: 2px solid #64b5f6;
+            padding: 12px;
+            text-align: center;
+            color: #0d47a1;
+        }
+        
+        th {
+            background-color: #90caf9;
+            color: #0d47a1;
+        }
+        
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background-color: #2196f3;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+        
+        .home-link:hover {
+            background-color: #1976d2;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        input,
+        select {
+            padding: 8px;
+            border: 2px solid #64b5f6;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="home-link" href="index.html">🏠 Home</a>
+
+    <h1>Available Books</h1>
+
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search by title" oninput="renderBooks()">
+        <select id="categoryFilter" onchange="renderBooks()">
+            <option value="">Sort by Category</option>
+            <option value="Fiction">Fiction</option>
+            <option value="Dystopian">Dystopian</option>
+            <option value="Autobiography">Autobiography</option>
+            <option value="Fantasy">Fantasy</option>
+            <option value="Self-help">Self-help</option>
+            <option value="Finance">Finance</option>
+            <option value="Psychology">Psychology</option>
+            <option value="Classic">Classic</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="History">History</option>
+            <option value="Programming">Programming</option>
+            <option value="Business">Business</option>
+            <option value="Entrepreneurship">Entrepreneurship</option>
+        </select>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Publisher</th>
+                <th>Copies</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Edition</th>
+            </tr>
+        </thead>
+        <tbody id="book-list"></tbody>
+    </table>
+
+    <script>
+        // Initialize books if not already in localStorage
+        if (!localStorage.getItem("books")) {
+            const initialBooks = [{
+                title: "The Alchemist",
+                author: "Paulo Coelho",
+                publisher: "HarperOne",
+                copies: 5,
+                price: 899,
+                category: "Fiction",
+                edition: "1st"
+            }, {
+                title: "1984",
+                author: "George Orwell",
+                publisher: "Penguin",
+                copies: 4,
+                price: 750,
+                category: "Dystopian",
+                edition: "3rd"
+            }, {
+                title: "Wings of Fire",
+                author: "A.P.J. Abdul Kalam",
+                publisher: "Universities Press",
+                copies: 3,
+                price: 699,
+                category: "Autobiography",
+                edition: "2nd"
+            }];
+
+            // Assign book_id in order
+            initialBooks.forEach((book, index) => {
+                book.book_id = index + 1;
+            });
+
+            localStorage.setItem("books", JSON.stringify(initialBooks));
+        }
+
+        let books = JSON.parse(localStorage.getItem("books")) || [];
+
+        function renderBooks() {
+            const bookList = document.getElementById("book-list");
+            const searchTerm = document.getElementById("search").value.toLowerCase();
+            const selectedCategory = document.getElementById("categoryFilter").value;
+
+            bookList.innerHTML = "";
+
+            let displayIndex = 1;
+            books.forEach((book) => {
+                if (
+                    book.title.toLowerCase().includes(searchTerm) &&
+                    (!selectedCategory || book.category === selectedCategory)
+                ) {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${displayIndex++}</td>
+                        <td>${book.title}</td>
+                        <td>${book.author}</td>
+                        <td>${book.publisher}</td>
+                        <td>${book.copies}</td>
+                        <td>₹${book.price}</td>
+                        <td>${book.category}</td>
+                        <td>${book.edition}</td>
+                    `;
+                    bookList.appendChild(row);
+                }
+            });
+        }
+
+        window.onload = renderBooks;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Home</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('librarymanagement.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            text-align: center;
+            position: relative;
+        }
+        /* Overlay to darken the background */
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+        
+        h1 {
+            font-size: 3em;
+            margin-top: 50px;
+            color: #ffffff;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        nav a,
+        button {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1.2em;
+            padding: 15px 25px;
+            background-color: #2196f3;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        nav a:hover,
+        button:hover {
+            background-color: #1976d2;
+        }
+        
+        button {
+            margin-top: 30px;
+        }
+        
+        footer {
+            margin-top: 50px;
+            font-size: 1.2em;
+            color: #ddd;
+        }
+        
+        footer blockquote {
+            font-size: 1.5em;
+            font-style: italic;
+            color: #ffffff;
+            margin-top: 20px;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
+        }
+        
+        footer blockquote::before,
+        footer blockquote::after {
+            color: #2196f3;
+            font-size: 2em;
+        }
+        
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+            button {
+                width: 100%;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 2.5em;
+            }
+            footer blockquote {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Main Content, directly visible -->
+    <div id="content">
+        <h1>Library Management System</h1>
+        <h2>WELCOME</h2>
+        <nav>
+            <a href="books.html">📚 View Books</a>
+            <a href="register.html">📝 Register Reader</a>
+            <a href="issued.html">📖 Issued Books</a>
+            <a href="view_students.html">📋 View Registered Students</a>
+        </nav>
+
+        <!-- Button to go to Admin Dashboard -->
+        <button onclick="goToAdminPage()">👨‍💻 Go to Admin Dashboard</button>
+
+        <footer>
+            <blockquote>
+                "A library is not a luxury but one of the necessities of life." – Henry Ward Beecher
+            </blockquote>
+        </footer>
+    </div>
+
+    <script>
+        function goToAdminPage() {
+            window.location.href = "admin.html";
+        }
+    </script>
+
+</body>
+
+</html>

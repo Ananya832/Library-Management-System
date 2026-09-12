@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Register Student</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e3f2fd;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            position: relative;
+        }
+        
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background-color: #1976d2;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s;
+            z-index: 1000;
+        }
+        
+        .home-link:hover {
+            background-color: #1565c0;
+        }
+        
+        .form-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #1976d2;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 5px rgba(25, 118, 210, 0.5);
+        }
+        
+        button {
+            padding: 12px 25px;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        button:hover {
+            background-color: #1565c0;
+        }
+        
+        button:active {
+            background-color: #0d47a1;
+        }
+        
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 20px;
+                width: 90%;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="home-link" href="index.html">🏠 Home</a>
+
+    <div class="form-container">
+        <h1>Register New Student</h1>
+        <form id="register-form">
+            <input type="text" id="usn" placeholder="USN" required /><br />
+            <input type="text" id="name" placeholder="Name" required /><br />
+            <input type="text" id="department" placeholder="Department" required /><br />
+            <input type="number" id="semester" placeholder="Semester" min="1" max="8" required /><br />
+            <select id="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br />
+            <input type="email" id="email" placeholder="Email" required /><br />
+            <input type="tel" id="phone" placeholder="Phone Number" required pattern="[0-9]{10}" /><br />
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("register-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+
+            const usn = document.getElementById("usn").value.trim();
+            const name = document.getElementById("name").value.trim();
+            const gender = document.getElementById("gender").value;
+            const department = document.getElementById("department").value.trim();
+            const semester = document.getElementById("semester").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const phone = document.getElementById("phone").value.trim();
+
+            let members = JSON.parse(localStorage.getItem("members") || "[]");
+
+            const exists = members.find(member => member.usn === usn);
+            if (exists) {
+                alert("Student already registered!");
+                return;
+            }
+
+            const newMember = {
+                usn,
+                name,
+                gender,
+                department,
+                semester,
+                email,
+                phone
+            };
+
+            members.push(newMember);
+            localStorage.setItem("members", JSON.stringify(members));
+
+            alert("Student Registered Successfully!");
+            this.reset();
+        });
+    </script>
+</body>
+
+</html>

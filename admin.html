@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Library Management</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #e3f2fd;
+            margin: 0;
+            padding: 0;
+            color: #0d47a1;
+        }
+        
+        header {
+            background-color: #0d47a1;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            margin: 0;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        nav ul li {
+            margin: 0 20px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+        
+        main {
+            padding: 30px;
+            background-color: #ffffff;
+            margin: 20px;
+            border-radius: 8px;
+        }
+        
+        h2 {
+            color: #0d47a1;
+            text-align: center;
+        }
+        
+        h3 {
+            color: #1565c0;
+        }
+        
+        .grid-form {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            background-color: #bbdefb;
+            border: 2px solid #64b5f6;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 100%;
+        }
+        
+        .grid-form div {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .grid-form label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #0d47a1;
+        }
+        
+        .grid-form input {
+            padding: 8px;
+            border: 1px solid #64b5f6;
+            border-radius: 5px;
+        }
+        
+        .grid-form button {
+            padding: 10px;
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            grid-column: span 3;
+        }
+        
+        .grid-form button:hover {
+            background-color: #0d47a1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #e3f2fd;
+            border: 3px solid #90caf9;
+            border-radius: 10px;
+        }
+        
+        th,
+        td {
+            border: 1px solid #64b5f6;
+            padding: 12px;
+            text-align: center;
+            color: #0d47a1;
+        }
+        
+        th {
+            background-color: #64b5f6;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #bbdefb;
+        }
+        
+        button {
+            padding: 6px 14px;
+            color: white;
+            background-color: #1976d2;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: #0d47a1;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 10px 0;
+            background-color: #0d47a1;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Library Management - Admin</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="view_students.html">Registerd Students</a></li>
+                <li><a href="issued.html">Issued Books</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Admin Dashboard</h2>
+        <div id="add-book-section">
+            <h3>Add New Book:</h3>
+            <form id="add-book-form" class="grid-form">
+                <div>
+                    <label for="book-title">Book Title:</label>
+                    <input type="text" id="book-title" required />
+                </div>
+                <div>
+                    <label for="book-author">Author:</label>
+                    <input type="text" id="book-author" required />
+                </div>
+                <div>
+                    <label for="book-publisher">Publisher:</label>
+                    <input type="text" id="book-publisher" required />
+                </div>
+                <div>
+                    <label for="book-copies">Copies:</label>
+                    <input type="number" id="book-copies" required />
+                </div>
+                <div>
+                    <label for="book-price">Price:</label>
+                    <input type="number" id="book-price" required />
+                </div>
+                <div>
+                    <label for="book-category">Category:</label>
+                    <input type="text" id="book-category" required />
+                </div>
+                <div>
+                    <label for="book-edition">Edition:</label>
+                    <input type="text" id="book-edition" required />
+                </div>
+                <div>
+                    <button type="submit">Add Book</button>
+                </div>
+            </form>
+        </div>
+
+        <h3>Existing Books</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publisher</th>
+                    <th>Copies</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Edition</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="existing-books-list"></tbody>
+        </table>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Library Management System</p>
+    </footer>
+
+    <script>
+        document.getElementById('add-book-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const newBook = {
+                title: document.getElementById('book-title').value,
+                author: document.getElementById('book-author').value,
+                publisher: document.getElementById('book-publisher').value,
+                copies: Number(document.getElementById('book-copies').value),
+                price: Number(document.getElementById('book-price').value),
+                category: document.getElementById('book-category').value,
+                edition: document.getElementById('book-edition').value
+            };
+
+            let books = JSON.parse(localStorage.getItem('books')) || [];
+            books.push(newBook);
+            localStorage.setItem('books', JSON.stringify(books));
+            document.getElementById('add-book-form').reset();
+            loadExistingBooks();
+        });
+
+        function loadExistingBooks() {
+            const books = JSON.parse(localStorage.getItem('books')) || [];
+            const list = document.getElementById('existing-books-list');
+            list.innerHTML = '';
+
+            books.forEach((book, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${book.title}</td>
+                    <td>${book.author}</td>
+                    <td>${book.publisher}</td>
+                    <td>${book.copies}</td>
+                    <td>₹${book.price}</td>
+                    <td>${book.category}</td>
+                    <td>${book.edition}</td>
+                    <td><button onclick="deleteBook(${index})">Delete</button></td>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function deleteBook(index) {
+            let books = JSON.parse(localStorage.getItem('books')) || [];
+            books.splice(index, 1);
+            localStorage.setItem('books', JSON.stringify(books));
+            loadExistingBooks();
+        }
+
+        window.onload = loadExistingBooks;
+    </script>
+</body>
+
+</html>
